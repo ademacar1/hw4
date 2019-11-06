@@ -1,0 +1,35 @@
+import csv
+
+
+#company = [discount,credit]
+kpmgCompany = [0,0]
+eyCompany = [0,0]
+pwcCompany = [0,0]
+dtCompany = [0,0]
+
+allCompany = [kpmgCompany,eyCompany,dtCompany,pwcCompany]
+companyList = ["KPMG","EY","Deloite & Touche","PWC"]
+
+with open('plaza_coffee_2.csv', newline='\n') as csvfile:
+
+    i = 0
+
+    spamreader = csv.reader(csvfile, delimiter=';')
+    next(spamreader, None)
+    for row in spamreader:
+        for i in companyList:
+            if (row[0] == i):
+                list_num=companyList.index(i)
+                if (row[3] == "Cash"):
+                    allCompany[list_num][0] = allCompany[list_num][0] + 1
+                elif row[3] == "Credit":
+                    if (row[1] == "Coffee"):
+                        allCompany[companyList.index(i)][1] = allCompany[companyList.index(i)][1] + int(row[2])
+
+
+for companyName,company in zip(companyList,allCompany):
+
+    print("From " + companyName +  " " + str(company[0]) +" people have bought stuff on discount and paid in cash, also assistants got " +
+          str(company[1]) +" servings of coffee on credit.")
+
+    
